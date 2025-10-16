@@ -8,12 +8,12 @@ export function HomePage() {
     const [cart, setCart] = useState([]);
 
     useEffect(() => {
-        axios.get('http://localhost:3000/api/products')  //Contacts the backend
+        axios.get('/api/products')  //Contacts the backend
         .then((response) => {
             setProducts(response.data);
         });
 
-        axios.get('http://localhost:3000/api/cart-items')
+        axios.get('/api/cart-items')
         .then((response) => {
             setCart(response.data);
         });
