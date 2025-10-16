@@ -1,13 +1,12 @@
+import axios from 'axios';
 import { Header } from '../components/Header';
 import { products } from '../../starting-code/data/products';
 import './HomePage.css';
 
 export function HomePage() {
-    fetch('http://localhost:3000/api/products')  //Contacts the backend
+    axios.get('http://localhost:3000/api/products')  //Contacts the backend
         .then((response) => {
-            return response.json();
-        }).then((data) => {  //.json is asynchronous
-            console.log(data);
+            console.log(response.data);
         });
 
     return (
