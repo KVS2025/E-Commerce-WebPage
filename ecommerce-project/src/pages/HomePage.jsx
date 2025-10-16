@@ -1,16 +1,16 @@
+/* eslint-disable react/prop-types */
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Header } from '../components/Header';
+import { formatMoney } from '../utils/money';
 import './HomePage.css';
 
 export function HomePage({ cart }) {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        axios.get('/api/products')  //Contacts the backend
-        .then((response) => {
-            setProducts(response.data);
-        });
+        axios.get('/api/products')
+            .then((response) => setProducts(response.data));
     }, []);
 
     return (
@@ -30,7 +30,7 @@ export function HomePage({ cart }) {
                                 </div>
 
                                 <div className="product-name limit-text-to-2-lines">
-                                   {product.name}
+                                    {product.name}
                                 </div>
 
                                 <div className="product-rating-container">
@@ -42,7 +42,7 @@ export function HomePage({ cart }) {
                                 </div>
 
                                 <div className="product-price">
-                                    ${(product.priceCents / 100).toFixed(2)}
+                                    {formatMoney(product.priceCents)}
                                 </div>
 
                                 <div className="product-quantity-container">
