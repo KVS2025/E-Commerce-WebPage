@@ -1,18 +1,17 @@
 /* eslint-disable react/prop-types */
 
-import axios from 'axios';
-import { useEffect, useState } from 'react';
+// import { useState } from 'react';
 import { Header } from '../../components/Header';
 import { formatMoney } from '../../utils/money';
+import {products} from '../../../starting-code/data/products.js';  
 import './HomePage.css';
 
 export function HomePage({ cart }) {
-    const [products, setProducts] = useState([]);
 
-    useEffect(() => {
-        axios.get('/api/products')
-            .then((response) => setProducts(response.data));
-    }, []);
+    // useEffect(() => {
+    //     axios.get('/api/products')
+    //         .then((response) => setProducts(response.data));
+    // }, []);
 
     return (
         <>
