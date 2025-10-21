@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-
 // import { useState } from 'react';
 import { Header } from '../../components/Header';
 import { formatMoney } from '../../utils/money';
