@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import dayjs from 'dayjs';
 import axios from 'axios';
 import { formatMoney } from '../../utils/money';
@@ -32,7 +33,9 @@ export function DeliveryOptions({ cartItem, deliveryOptions, loadCart }) {
               name={`delivery-option-${cartItem.productId}`} />
             <div>
               <div className="delivery-option-date">
-                {dayjs(deliveryOption.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
+                {deliveryOption.deliveryDays === 1
+                  ? 'Tomorrow'
+                : dayjs(deliveryOption.estimatedDeliveryTimeMs).format('dddd, MMMM D')}
               </div>
               <div className="delivery-option-price">
                 {priceString}

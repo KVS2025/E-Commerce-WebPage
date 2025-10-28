@@ -48,7 +48,7 @@ app.get('/api/delivery-options', (req, res) => {
     if (req.query.expand === 'estimatedDeliveryTime') {
       const expandedOptions = deliveryOptions.map(option => ({
         ...option,
-        estimatedDeliveryTime: new Date(Date.now() + option.deliveryDays * 24 * 60 * 60 * 1000).toISOString()
+        estimatedDeliveryTimeMs: Date.now() + option.deliveryDays * 24 * 60 * 60 * 1000
       }));
       return res.json(expandedOptions);
     }
