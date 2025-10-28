@@ -114,9 +114,23 @@ app.get('/api/products', (req, res) => {
 });
 
 // GET /api/orders
+// GET /api/orders?expand=products
 app.get('/api/orders', (req, res) => {
   try {
     const orders = readJSON('orders.json');
+    const products = readJSON('products.json');
+    
+    if (req.query.expand === 'products') {
+      const expandedOrders = orders.map(order => ({
+        ...order,
+        products: order.products.map(orderProduct => ({
+          ...orderProduct,
+          product: products.find(p => p.id === orderProduct.productId)
+        }))
+      }));
+      return res.json(expandedOrders);
+    }
+    
     res.json(orders);
   } catch (error) {
     console.error('Error loading orders:', error);
