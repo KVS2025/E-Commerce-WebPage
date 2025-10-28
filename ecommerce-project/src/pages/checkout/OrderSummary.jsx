@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import axios from 'axios';
 import dayjs from 'dayjs';
 import { formatMoney } from '../../utils/money';

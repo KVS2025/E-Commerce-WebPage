@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import { formatMoney } from '../../utils/money';
