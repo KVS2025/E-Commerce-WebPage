@@ -9,28 +9,16 @@ import './App.css'
 
 function App() {
   const [cart, setCart] = useState([]);
-  const [loading, setLoading] = useState(true);
 
   const loadCart = async () => {
-    try {
-      const response = await axios.get('/api/cart-items?expand=product');
-      setCart(response.data);
-    } catch (error) {
-      console.error('Error loading cart:', error);
-      // Set empty cart on error so app doesn't crash
-      setCart([]);
-    } finally {
-      setLoading(false);
-    }
+    const response = await axios.get('/api/cart-items?expand=product');
+    setCart(response.data);
   };
 
   useEffect(() => {
     loadCart();
+    //Set empty cart so that app doesnt crash
   }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <Routes>
