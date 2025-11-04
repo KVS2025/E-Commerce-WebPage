@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { OrderSummary } from './OrderSummary';
 import { PaymentSummary } from './PaymentSummary';
 import './checkout-header.css';
@@ -9,15 +9,21 @@ export function CheckoutPage({ cart, loadCart }) {
   const [deliveryOptions, setDeliveryOptions] = useState([]);
   const [paymentSummary, setPaymentSummary] = useState(null);
 
+  // Automatically calculate total items from cart
+  const totalItems = useMemo(() => {
+    if (!cart || !Array.isArray(cart)) return 0;
+    return cart.reduce((total, item) => total + (item.quantity || 0), 0);
+  }, [cart]);
+
   useEffect(() => {
     const fetchCheckoutData = async () => {
       let response = await axios.get(
-        '/api/delivery-options?expand=estimatedDeliveryTime'//Dynamic Dates laata hai dayjs se
+        '/api/delivery-options?expand=estimatedDeliveryTime'
       );
       setDeliveryOptions(response.data);
 
       response = await axios.get('/api/payment-summary');
-      setPaymentSummary(response.data); //Payment Summary reload karta hai
+      setPaymentSummary(response.data);
     };
 
     fetchCheckoutData();
@@ -31,18 +37,19 @@ export function CheckoutPage({ cart, loadCart }) {
         <div className="header-content">
           <div className="checkout-header-left-section">
             <a href="/">
-              <img className="logo" src="images/logo.png" />
-              <img className="mobile-logo" src="images/mobile-logo.png" />
+              <img className="logo" src="images/logo.png" alt="Logo" />
+              <img className="mobile-logo" src="images/mobile-logo.png" alt="Mobile Logo" />
             </a>
           </div>
 
           <div className="checkout-header-middle-section">
-            Checkout (<a className="return-to-home-link"
-              href="/">3 items</a>)
+            Checkout (<a className="return-to-home-link" href="/">
+              {totalItems} {totalItems === 1 ? 'item' : 'items'}
+            </a>)
           </div>
 
           <div className="checkout-header-right-section">
-            <img src="images/icons/checkout-lock-icon.png" />
+            <img src="images/icons/checkout-lock-icon.png" alt="Secure checkout" />
           </div>
         </div>
       </div>
