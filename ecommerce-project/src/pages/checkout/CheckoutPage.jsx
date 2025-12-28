@@ -23,6 +23,9 @@ export function CheckoutPage({ cart, loadCart }) {
     fetchCheckoutData();
   }, [cart]);
 
+  // Calculate total items in cart
+  const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
   return (
     <>
       <title>Checkout</title>
@@ -38,7 +41,7 @@ export function CheckoutPage({ cart, loadCart }) {
 
           <div className="checkout-header-middle-section">
             Checkout (<a className="return-to-home-link"
-              href="/">3 items</a>)
+              href="/">{totalItems} {totalItems === 1 ? 'item' : 'items'}</a>)
           </div>
 
           <div className="checkout-header-right-section">

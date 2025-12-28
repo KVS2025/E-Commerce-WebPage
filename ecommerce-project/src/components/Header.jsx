@@ -1,12 +1,23 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import './header.css'
 
 export function Header({ cart = [] }) {
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
   let totalQuantity = 0;
 
   cart.forEach((cartItem) => {
     totalQuantity += cartItem.quantity;
   });
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <div className="header">
@@ -18,10 +29,18 @@ export function Header({ cart = [] }) {
       </div>
 
       <div className="middle-section">
-        <input className="search-bar" type="text" placeholder="Search" />
-        <button className="search-button">
-          <img className="search-icon" src="images/icons/search-icon.png" />
-        </button>
+        <form onSubmit={handleSearch}>
+          <input 
+            className="search-bar" 
+            type="text" 
+            placeholder="Search" 
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <button type="submit" className="search-button">
+            <img className="search-icon" src="images/icons/search-icon.png" />
+          </button>
+        </form>
       </div>
 
       <div className="right-section">

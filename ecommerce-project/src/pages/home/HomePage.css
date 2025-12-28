@@ -170,3 +170,44 @@
     cursor: not-allowed;
     opacity: 0.9;
 }
+
+.search-results-header {
+  padding: 20px;
+  background-color: #f5f5f5;
+  margin-bottom: 20px;
+  border-radius: 4px;
+}
+
+.search-results-header h2 {
+  margin: 0 0 10px 0;
+  font-size: 24px;
+  color: #333;
+}
+
+.search-results-header p {
+  margin: 0;
+  color: #666;
+  font-size: 16px;
+}
+
+.no-results {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.no-results p {
+  font-size: 18px;
+  margin-bottom: 20px;
+  color: #666;
+}
+
+.link-primary {
+  color: #007185;
+  text-decoration: none;
+  font-size: 16px;
+}
+
+.link-primary:hover {
+  color: #c7511f;
+  text-decoration: underline;
+}
