@@ -17,7 +17,13 @@ export function OrdersPage({ cart }) {
         console.log('Fetching orders...');
         const response = await axios.get('/api/orders?expand=products');
         console.log('Orders received:', response.data);
-        setOrders(response.data);
+        
+        // Sort orders by orderTimeMs in descending order (latest first)
+        const sortedOrders = response.data.sort((a, b) => 
+          b.orderTimeMs - a.orderTimeMs
+        );
+        
+        setOrders(sortedOrders);
         setError(null);
       } catch (err) {
         console.error('Error fetching orders:', err);
