@@ -7,24 +7,52 @@ import './OrdersPage.css';
 
 export function OrdersPage({ cart }) {
   const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get('/api/orders?expand=products')
-      .then((response) => {
+    const fetchOrders = async () => {
+      try {
+        setLoading(true);
+        console.log('Fetching orders...');
+        const response = await axios.get('/api/orders?expand=products');
+        console.log('Orders received:', response.data);
         setOrders(response.data);
-      });
+        setError(null);
+      } catch (err) {
+        console.error('Error fetching orders:', err);
+        setError('Failed to load orders');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchOrders();
   }, []);
 
   return (
     <>
+      <title>Orders</title>
+
       <Header cart={cart} />
+
       <div className="orders-page">
         <div className="page-title">Your Orders</div>
+
+        {loading && <div>Loading orders...</div>}
+        {error && <div className="error-message">{error}</div>}
+        
+        {!loading && !error && orders.length === 0 && (
+          <div className="no-orders">
+            <p>You have not placed any orders yet.</p>
+          </div>
+        )}
 
         <div className="orders-grid">
           {orders.map((order) => {
             return (
               <div key={order.id} className="order-container">
+
                 <div className="order-header">
                   <div className="order-header-left-section">
                     <div className="order-date">
@@ -36,6 +64,7 @@ export function OrdersPage({ cart }) {
                       <div>{formatMoney(order.totalCostCents)}</div>
                     </div>
                   </div>
+
                   <div className="order-header-right-section">
                     <div className="order-header-label">Order ID:</div>
                     <div>{order.id}</div>
@@ -44,27 +73,33 @@ export function OrdersPage({ cart }) {
 
                 <div className="order-details-grid">
                   {order.products.map((orderProduct) => {
-                    const product = orderProduct.product;
-                    
                     return (
-                      <Fragment key={product.id}>
+                      <Fragment key={orderProduct.productId}>
                         <div className="product-image-container">
-                          <img src={product.image} alt={product.name} />
+                          <img src={orderProduct.product?.image} />
                         </div>
+
                         <div className="product-details">
-                          <div className="product-name">{product.name}</div>
+                          <div className="product-name">
+                            {orderProduct.product?.name}
+                          </div>
                           <div className="product-delivery-date">
                             Arriving on: {dayjs(orderProduct.estimatedDeliveryTimeMs).format('MMMM D')}
                           </div>
-                          <div className="product-quantity">Quantity: {orderProduct.quantity}</div>
+                          <div className="product-quantity">
+                            Quantity: {orderProduct.quantity}
+                          </div>
                           <button className="buy-again-button button-primary">
-                            <img className="buy-again-icon" src="/images/icons/buy-again.png" alt="Buy again" />
+                            <img className="buy-again-icon" src="images/icons/buy-again.png" />
                             <span className="buy-again-message">Add to Cart</span>
                           </button>
                         </div>
+
                         <div className="product-actions">
-                          <a href="/tracking">
-                            <button className="track-package-button button-secondary">Track package</button>
+                          <a href={`/tracking?orderId=${order.id}&productId=${orderProduct.productId}`}>
+                            <button className="track-package-button button-secondary">
+                              Track package
+                            </button>
                           </a>
                         </div>
                       </Fragment>

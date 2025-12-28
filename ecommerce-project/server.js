@@ -223,6 +223,66 @@ app.get('/api/orders', (req, res) => {
   }
 });
 
+// POST /api/orders - Create new order from cart
+app.post('/api/orders', (req, res) => {
+  try {
+    const cartItems = readJSON('cart.json');
+    const products = readJSON('products.json');
+    const deliveryOptions = readJSON('deliveryOptions.json');
+    const orders = readJSON('orders.json');
+    
+    if (cartItems.length === 0) {
+      return res.status(400).json({ error: 'Cart is empty' });
+    }
+    
+    // Calculate order totals
+    let productCostCents = 0;
+    let shippingCostCents = 0;
+    
+    const orderProducts = cartItems.map(item => {
+      const product = products.find(p => p.id === item.productId);
+      const deliveryOption = deliveryOptions.find(d => d.id === item.deliveryOptionId);
+      
+      if (product) {
+        productCostCents += product.priceCents * item.quantity;
+      }
+      if (deliveryOption) {
+        shippingCostCents += deliveryOption.priceCents;
+      }
+      
+      return {
+        productId: item.productId,
+        quantity: item.quantity,
+        estimatedDeliveryTimeMs: Date.now() + (deliveryOption?.deliveryDays || 7) * 24 * 60 * 60 * 1000
+      };
+    });
+    
+    const totalCostBeforeTaxCents = productCostCents + shippingCostCents;
+    const taxCents = Math.round(totalCostBeforeTaxCents * 0.1);
+    const totalCostCents = totalCostBeforeTaxCents + taxCents;
+    
+    // Create new order
+    const newOrder = {
+      id: `order_${Date.now()}`,
+      orderTimeMs: Date.now(),
+      totalCostCents,
+      products: orderProducts
+    };
+    
+    // Add order to orders list
+    orders.push(newOrder);
+    writeJSON('orders.json', orders);
+    
+    // Clear the cart
+    writeJSON('cart.json', []);
+    
+    res.json({ success: true, order: newOrder });
+  } catch (error) {
+    console.error('Error creating order:', error);
+    res.status(500).json({ error: 'Failed to create order' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`🚀 Backend server running on http://localhost:${PORT}`);
   console.log(`📦 Serving data from: starting-code/backend/`);
