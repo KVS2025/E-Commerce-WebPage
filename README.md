@@ -58,6 +58,18 @@ This project was my first major dive into the React ecosystem. Key takeaways inc
 * **API Workflow:** Implementing `GET` and `POST` requests using Axios to simulate real-world data handling.
 
 ---
+Screens from the E-Commerce web application demonstrating the complete user flow:
+- Product listing with dynamic rendering
+- Add-to-cart and cart state updates
+- Checkout flow with delivery options and price calculation
+- Orders and order-tracking pages
+
+<img width="1919" height="1009" alt="Screenshot 2025-12-28 150803" src="https://github.com/user-attachments/assets/c850a3b3-8c9d-4942-87fd-7b58e87b09c3" />
+<img width="1775" height="822" alt="Screenshot 2025-12-28 150931" src="https://github.com/user-attachments/assets/4cddc291-4ba2-462c-99df-68111e9d49ea" />
+<img width="1900" height="1012" alt="Screenshot 2025-12-28 150945" src="https://github.com/user-attachments/assets/929585c2-8a49-4d9c-8cb8-17b7a4de31f3" />
+<img width="1894" height="1008" alt="Screenshot 2025-12-28 150958" src="https://github.com/user-attachments/assets/6cd35ce5-281b-4b31-bb68-98131a0d9629" />
+
+Note: This project focuses on frontend logic, state management, and UI behavior rather than production-level backend features.
 
 ### 📬 Connect with me
 * **LinkedIn:** https://www.linkedin.com/in/keval-shah-554511330
