@@ -1,7 +1,6 @@
 # 🛒 SuperSimple E-Commerce Platform
 
 A feature-rich, responsive e-commerce application built with **React** and **JSX**. This project demonstrates a complete shopping flow, from product selection to real-time cart updates and order tracking.
-![App Demo](https://github.com/KVS2025/E-Commerce-WebPage/blob/main/project-demo.gif?raw=true) 
 
 ## 🌟 Key Features
 
