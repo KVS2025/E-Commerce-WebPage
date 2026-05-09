@@ -5,7 +5,7 @@ import { HomePage } from './pages/home/HomePage';
 import { CheckoutPage } from './pages/checkout/CheckoutPage';
 import { OrdersPage } from './pages/orders/OrdersPage';
 import { TrackingPage } from './pages/tracking/TrackingPage';
-import './App.css'
+import './App.css';
 
 function App() {
   const [cart, setCart] = useState([]);

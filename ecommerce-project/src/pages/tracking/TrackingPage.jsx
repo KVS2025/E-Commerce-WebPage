@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import axios from 'axios';
 import dayjs from 'dayjs';
-import { Header } from "../../components/Header";
+import { Header } from "../../components/common/Header";
 import './TrackingPage.css';
 
 export function TrackingPage() {

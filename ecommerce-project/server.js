@@ -8,20 +8,20 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(express.json());
 
 // Helper function to read JSON files
 function readJSON(filename) {
-  const filePath = join(__dirname, 'starting-code', 'backend', filename);
+  const filePath = join(__dirname, 'data', filename);
   return JSON.parse(readFileSync(filePath, 'utf-8'));
 }
 
 // Helper function to write JSON files
 function writeJSON(filename, data) {
-  const filePath = join(__dirname, 'starting-code', 'backend', filename);
+  const filePath = join(__dirname, 'data', filename);
   writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
 }
 
@@ -285,5 +285,5 @@ app.post('/api/orders', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 Backend server running on http://localhost:${PORT}`);
-  console.log(`📦 Serving data from: starting-code/backend/`);
+  console.log(`📦 Serving data from: ./data/`);
 });
